@@ -1,10 +1,10 @@
 
 
 pub struct Service {
-	connected : int,
+	pub connected : i32,
 }
 
-pub impl Service {
+impl Service {
 	pub fn new() -> Service {
 		return Service{
 			connected : 10
@@ -16,6 +16,6 @@ pub impl Service {
 	}
 }
 
-fn serve<Type>(port : int, protocol : Type) {
-	
+pub fn say_hello() {
+	println!("hello");
 }
