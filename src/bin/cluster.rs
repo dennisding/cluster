@@ -1,34 +1,40 @@
 
+use tokio::io::{self, AsyncReadExt, AsyncWriteExt};
+
+// use cluster::cluster;
+use cluster::cluster;
+
 // mod network;
-use cluster::network;
-use cluster::utils::id_mgr::{IdMgr, IdAllocator};
+#[tokio::main]
+async fn main() -> io::Result<()> {
 
-fn main() {
-	network::service::say_hello();
-	println!("Hello, world! cluster");
-
-//	let mgr = IdMgr.new();
-	let allocator = IdAllocator::new();
-	// let block = allocator.alloc_block();
+	cluster::serve_forever(1000, 1001).await?;
 	
-	// mgr.add_id_block(block);
 
-	// let id = mgr.alloc();
+	Ok(())
+//	cluster::serve().await?;
+	// let listener = TcpListener::bind("127.0.0.1:1234").await?;
 
-	println!("alloc id:{}", allocator.alloc());
-	println!("alloc id:{}", allocator.alloc());
-	println!("alloc id:{}", allocator.alloc());
-	println!("alloc id block:{:?}", allocator.alloc_block());
-	println!("alloc id:{}", allocator.alloc());
+	// loop {
+	// 	let (mut socket, _) = listener.accept().await?;
 
-	let block = allocator.alloc_block();
-	let mgr = IdMgr::new();
-	mgr.fill_id_block(block);
-
-	if let Some(id) = mgr.alloc() {
-		println!("mgr alloc:{}", id);
-	}
-	println!("mgr alloc:{}", mgr.alloc().unwrap());
-	println!("mgr alloc:{}", mgr.alloc().unwrap());
-	println!("mgr alloc:{}", mgr.alloc().unwrap());
+	// 	tokio::spawn(async move {
+	// 		let mut buffer = [0; 1024];
+	// 		loop {
+	// 			let n = match socket.read(&mut buffer).await {
+	// 				Ok(0) => return,
+	// 				Ok(n) => n,
+	// 				Err(e) => {
+	// 					println!("read error:{}", e);
+	// 					return;
+	// 				}
+	// 			};
+	// 			// write back
+	// 			if let Err(e) = socket.write_all(&buffer[..n]).await {
+	// 				println!("write erro: {}", e);
+	// 				return;
+	// 			}
+	// 		}
+	// 	});
+	//}
 }
