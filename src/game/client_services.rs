@@ -2,7 +2,7 @@
 use tokio::sync::mpsc;
 use tokio::net::tcp::OwnedReadHalf;
 use tokio::net::TcpListener;
-use tokio::io::{AsyncReadExt, AsyncWriteExt};
+use tokio::io::{AsyncReadExt};
 use super::message::Message;
 
 pub struct ClientServices {
@@ -23,11 +23,11 @@ impl ClientServices {
         let accepter = TcpListener::bind(listen_addr).await?;
 
         loop {
-            let (mut stream, _) = accepter.accept().await?;
+            let (stream, _) = accepter.accept().await?;
             println!("accept: {}", stream.peer_addr().unwrap());
             let new_sender = sender.clone();
 
-            let (reader, writer) = stream.into_split();
+            let (reader, _) = stream.into_split();
 
             tokio::spawn(Self::handle_client_wrap(new_sender, reader));
         }
@@ -58,8 +58,6 @@ impl ClientServices {
                 _ => ()
             }
         }
-
-        Ok(())
     }
 
     async fn handle_hello(sender: &mpsc::Sender<Message>, reader: &mut OwnedReadHalf) 

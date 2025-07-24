@@ -22,7 +22,7 @@ impl Game {
         let config = Config::new();
         let runtime = tokio::runtime::Runtime::new().unwrap();
 
-        let (mut sender, mut receiver) = mpsc::channel::<Message>(config.channel_size);
+        let (sender, mut receiver) = mpsc::channel::<Message>(config.channel_size);
 
         // client serve
         let client_serve = ClientServices::serve(sender.clone(), config.client_port);

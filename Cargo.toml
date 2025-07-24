@@ -12,8 +12,16 @@ name = "bgame"
 path = "src/bgame.rs"
 
 [[bin]]
-name = 'bclient'
+name = "bclient"
 path = "src/bclient.rs"
+
+[[bin]]
+name = "bgate"
+path = "src/bgate.rs"
+
+[[bin]]
+name = "btest"
+path = "src/btest.rs"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }

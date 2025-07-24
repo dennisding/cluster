@@ -1,15 +1,8 @@
 
 
-pub enum GameProtocols {
-    GameConnected,
-    GameClientHello(i32, String),
-}
+use super::packet::Packet;
 
-
-pub struct Hello {
-    id : i32,
-    msg : String,
-}
-
-impl Hello {
+pub trait Protocols {
+    fn on_ready(&mut self);
+    fn on_packet(&mut self, packet: Packet);
 }
